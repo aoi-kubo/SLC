@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シリコ-調味料期限管理</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <!-- <script defer type="module" src="./js/main.js"></script> -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>買い物リスト</h1>
+  </header>
+  <div class="wrapper">
+    <div class="tab">
+      <label class="tab-label">
+        <input type="radio" name="tab" checked>
+        未購入
+      </label>
+      <div class="shopping-list none">
+        <ul>
+          <li class="item-contents">
+            <input class="item-checkbox" type="checkbox" name="checkbox" id="checkbox1">
+            <label for="checkbox1" class="item-detail">
+              <h2 class="item-name">ごま油 200g</h2>
+              <div>
+                <p class="item-limit"><span>前回購入日：</span>2025/12/07</p>
+                <p class="item-name"><span>購入金額：</span>232円</p>
+              </div>
+            </label>
+          </li>
+          <li class="item-contents">
+            <input class="item-checkbox" type="checkbox" name="checkbox" id="checkbox2">
+            <label for="checkbox2" class="item-detail">
+              <h2 class="item-name">白だし 500g</h2>
+              <div>
+                <p class="item-limit"><span>前回購入日：</span>2024/09/03</p>
+                <p class="item-name"><span>購入金額：</span>342円</p>
+              </div>
+            </label>
+          </li>
+          <li class="item-contents">
+            <input class="item-checkbox" type="checkbox" name="checkbox" id="checkbox3">
+            <label for="checkbox3" class="item-detail">
+              <h2 class="item-name">片栗粉 225g</h2>
+              <div>
+                <p class="item-limit"><span>前回購入日：</span>2025/10/09</p>
+                <p class="item-name"><span>購入金額：</span>242円</p>
+              </div>
+            </label>
+          </li>
+          <li class="item-contents">
+            <input class="item-checkbox" type="checkbox" name="checkbox" id="checkbox4">
+            <label for="checkbox4" class="item-detail">
+              <h2 class="item-name">調味塩</h2>
+              <div>
+                <p class="item-limit"><span>前回購入日：</span>2025/12/10</p>
+                <p class="item-name"><span>購入金額：</span>142円</p>
+              </div>
+            </label>
+          </li>
+        </ul>
+      </div>
+
+      <label class="tab-label">
+        <input type="radio" name="tab">
+        購入済み
+      </label>
+      <div class="shopping-list done">
+        <ul>
+          <li class="item-contents">
+            <input class="item-checkbox" type="checkbox" name="checkbox" id="checkbox1" checked>
+            <label for="checkbox1" class="item-detail">
+              <h2 class="item-name">ごま油 200g</h2>
+              <div>
+                <p class="item-limit"><span>前回購入日：</span>2025/12/07</p>
+                <p class="item-name"><span>購入金額：</span>382円</p>
+              </div>
+            </label>
+          </li>
+          <li class="item-contents">
+            <input class="item-checkbox" type="checkbox" name="checkbox" id="checkbox2" checked>
+            <label for="checkbox2" class="item-detail">
+              <h2 class="item-name">白だし 500g</h2>
+              <div>
+                <p class="item-limit"><span>前回購入日：</span>2025/2</p>
+                <p class="item-name"><span>購入金額：</span>283円</p>
+              </div>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer">
+      <a href="index.html">
+        <img src="./img/home.svg" alt="">
+        <p>アイテム一覧</p>
+      </a>
+      <a href="">
+        <img src="./img/add.svg" alt="">
+        <p>アイテム入力</p>
+      </a>
+      <a href="">
+        <img src="./img/search.svg" alt="">
+        <p>レシピ検索</p>
+      </a>
+      <a href="shopping_list.html" class="active">
+        <img src="./img/shopping.svg" alt="">
+        <p>買い物リスト</p>
+      </a>
+    </div>
+  </footer>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
