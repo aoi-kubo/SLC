@@ -54,7 +54,7 @@ header {
 
 h1 {
   font-size: 16px;
-  padding: 24px 12px 8px;
+  padding: 12px 12px 8px;
   background: #6B8E23;
   color: #FFF;
 }
@@ -99,7 +99,7 @@ h1 {
 
 /* アイテム一覧 */
 .wrapper {
-  padding: 72px 12px 60px;
+  padding: 60px 12px 60px;
 }
 
 .item-contents {
