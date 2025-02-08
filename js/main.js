@@ -37,7 +37,7 @@ $(document).ready(function () {
       currentX = e.originalEvent.touches[0].clientX;
       let diffX = startX - currentX;
 
-      if (diffX > 20) { // 左スワイプ
+      if (diffX > 20) { // 左スワイプで削除ボタン表示
           isSwiping = true;
           $(".item-contents").removeClass("show-delete"); // 他のアイテムを閉じる
           $(this).addClass("show-delete");
@@ -54,7 +54,8 @@ $(document).ready(function () {
   });
 
   // 削除ボタンのクリックでアイテムを削除
-  $(".delete-btn").on("click", function () {
-      $(this).closest(".item-contents").remove();
+  $(".delete-btn").on("click", function (e) {
+      e.stopPropagation(); // イベントのバブリングを防ぐ
+      $(this).closest(".item-wrapper").remove(); // アイテム全体を削除
   });
 });

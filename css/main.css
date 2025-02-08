@@ -102,10 +102,19 @@ h1 {
   padding: 60px 12px 60px;
 }
 
+.item-wrapper {
+  position: relative;
+}
+
+.item-wrapper + .item-wrapper ,
+.item-contents + .item-contents {
+  margin-top: 12px;
+}
+
 .item-contents {
-  border: 1px solid #DDDDDD;
   display: flex;
   align-items: center;
+  border: 1px solid #DDDDDD;
   padding: 8px;
   border-radius: 4px;
   background: #fff;
@@ -114,10 +123,6 @@ h1 {
 .item-contents.deadline {
   background: #FFF7F7;
   border: 2px solid #FF5050;
-}
-
-.item-contents + .item-contents {
-  margin-top: 12px;
 }
 
 .item-contents .label {
@@ -156,7 +161,7 @@ h1 {
 
 .delete-btn {
   position: absolute;
-  right: -80px;
+  right: 0px;
   width: 80px;
   height: 100%;
   background: #FF5050;
@@ -169,11 +174,10 @@ h1 {
   top: -1px;
   border-radius: 0 4px 4px 0;
   border: 1px solid #FF5050;
-  z-index: -1;
   display: none;
 }
 
-.item-contents.show-delete .delete-btn {
+.item-contents.show-delete + .delete-btn {
   display: flex;
 }
 
