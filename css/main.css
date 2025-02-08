@@ -108,6 +108,7 @@ h1 {
   align-items: center;
   padding: 8px;
   border-radius: 4px;
+  background: #fff;
 }
 
 .item-contents.deadline {
@@ -151,6 +152,33 @@ h1 {
 .item-detail p span {
   color: #909090;
   font-size: 1.2rem;
+}
+
+.delete-btn {
+  position: absolute;
+  right: -80px;
+  width: 80px;
+  height: 100%;
+  background: #FF5050;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: right 0.3s ease;
+  top: -1px;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #FF5050;
+  z-index: -1;
+  display: none;
+}
+
+.item-contents.show-delete .delete-btn {
+  display: flex;
+}
+
+.item-contents.show-delete {
+  transform: translateX(-80px);
 }
 
 /* アイテム追加 */
