@@ -53,9 +53,19 @@ $(document).ready(function () {
       }
   });
 
-  // 削除ボタンのクリックでアイテムを削除
-  $(".delete-btn").on("click", function (e) {
+  // 削除ボタンのクリックでアイテムを削除（1回のタップで削除可能に修正）
+  $(".item-list").on("click", ".delete-btn", function (e) {
       e.stopPropagation(); // イベントのバブリングを防ぐ
-      $(this).closest(".item-wrapper").remove(); // アイテム全体を削除
+
+      let item = $(this).closest(".item-contents");
+
+      if (item.hasClass("show-delete")) {
+          // すでに削除ボタンが表示されていたら削除する
+          item.remove();
+      } else {
+          // まず削除ボタンを表示する
+          $(".item-contents").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
+          item.addClass("show-delete");
+      }
   });
 });
