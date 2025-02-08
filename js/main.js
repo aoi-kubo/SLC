@@ -39,9 +39,9 @@ $(document).ready(function () {
 
       if (diffX > 20) { // 左スワイプで削除ボタン表示
           isSwiping = true;
-          $(".item-contents").removeClass("show-delete"); // 他のアイテムを閉じる
+          $(".item-contents").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
           $(this).addClass("show-delete");
-      } else if (diffX < -20) { // 右スワイプで戻す
+      } else if (diffX < -20) { // 右スワイプで削除ボタンを閉じる
           isSwiping = true;
           $(this).removeClass("show-delete");
       }
@@ -53,19 +53,10 @@ $(document).ready(function () {
       }
   });
 
-  // 削除ボタンのクリックでアイテムを削除（1回のタップで削除可能に修正）
+  // 削除ボタンのクリックで即削除
   $(".item-list").on("click", ".delete-btn", function (e) {
-      e.stopPropagation(); // イベントのバブリングを防ぐ
-
-      let item = $(this).closest(".item-contents");
-
-      if (item.hasClass("show-delete")) {
-          // すでに削除ボタンが表示されていたら削除する
-          item.remove();
-      } else {
-          // まず削除ボタンを表示する
-          $(".item-contents").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
-          item.addClass("show-delete");
-      }
+      // e.stopPropagation(); // イベントのバブリングを防ぐ
+      $(this).closest(".item-wrapper").remove(); // 親要素の .item-contents を削除
+      
   });
 });
