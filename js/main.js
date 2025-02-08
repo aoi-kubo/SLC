@@ -55,7 +55,8 @@ $(document).ready(function () {
 
   // 削除ボタンのクリックで即削除
   $(".item-list").on("click", ".delete-btn", function (e) {
-      e.stopPropagation(); // イベントのバブリングを防ぐ
-      $(this).closest(".item-contents").remove(); // 親要素の .item-contents を削除
+      // e.stopPropagation(); // イベントのバブリングを防ぐ
+      $(this).closest(".item-wrapper").remove(); // 親要素の .item-contents を削除
+      
   });
 });
