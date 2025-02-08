@@ -102,21 +102,27 @@ h1 {
   padding: 60px 12px 60px;
 }
 
+.item-wrapper {
+  position: relative;
+}
+
+.item-wrapper + .item-wrapper ,
+.item-contents + .item-contents {
+  margin-top: 12px;
+}
+
 .item-contents {
-  border: 1px solid #DDDDDD;
   display: flex;
   align-items: center;
+  border: 1px solid #DDDDDD;
   padding: 8px;
   border-radius: 4px;
+  background: #fff;
 }
 
 .item-contents.deadline {
   background: #FFF7F7;
   border: 2px solid #FF5050;
-}
-
-.item-contents + .item-contents {
-  margin-top: 12px;
 }
 
 .item-contents .label {
@@ -151,6 +157,32 @@ h1 {
 .item-detail p span {
   color: #909090;
   font-size: 1.2rem;
+}
+
+.delete-btn {
+  position: absolute;
+  right: 0px;
+  width: 80px;
+  height: 100%;
+  background: #FF5050;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: right 0.3s ease;
+  top: -1px;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #FF5050;
+  display: none;
+}
+
+.item-contents.show-delete + .delete-btn {
+  display: flex;
+}
+
+.item-contents.show-delete {
+  transform: translateX(-80px);
 }
 
 /* アイテム追加 */
