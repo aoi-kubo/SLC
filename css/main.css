@@ -102,6 +102,27 @@ h1 {
   padding: 60px 12px 60px;
 }
 
+.wrapper .sort {
+  text-align: right;
+}
+
+.wrapper .sort select {
+  height: 32px;
+  border: none;
+  border-radius: 2px;
+  font-size: 14px;
+  width: 150px;
+  color: #333E48;
+  text-align: right;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 0 4px;
+  margin-bottom: 12px;
+  /* -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; */
+}
+
 .item-wrapper {
   position: relative;
 }
