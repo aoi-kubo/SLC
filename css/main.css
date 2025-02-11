@@ -104,6 +104,20 @@ h1 {
 
 .wrapper .sort {
   text-align: right;
+  position: relative;
+  padding-right: 16px;
+  margin-bottom: 12px
+}
+
+.wrapper .sort::before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  right: 0;
+  width: 16px;
+  height: 20px;
+  background: url(../img/sort.svg) no-repeat;
+  transform: translateY(-50%);
 }
 
 .wrapper .sort select {
@@ -111,16 +125,13 @@ h1 {
   border: none;
   border-radius: 2px;
   font-size: 14px;
-  width: 150px;
+  width: 120px;
   color: #333E48;
   text-align: right;
   box-sizing: border-box;
   background: #fff;
-  padding: 0 4px;
-  margin-bottom: 12px;
-  /* -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none; */
+  appearance: none;
+  margin-right: 12px;
 }
 
 .item-wrapper {
