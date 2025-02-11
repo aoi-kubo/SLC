@@ -128,6 +128,8 @@ h1 {
   width: 120px;
   color: #333E48;
   text-align: right;
+  text-align-last: right;
+  direction: rtl;
   box-sizing: border-box;
   background: #fff;
   appearance: none;
