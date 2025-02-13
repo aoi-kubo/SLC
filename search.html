@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シリコ-調味料期限管理</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <!-- <script defer type="module" src="./js/main.js"></script> -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>レシピ検索</h1>
+  </header>
+  <div class="wrapper">
+    <div class="search">
+      <input type="text" class="search-input" placeholder="調味料から検索">
+    </div>
+    <div class="menu-list">
+      <div class="menu">
+        <img src="./img/menu01.png" alt="">
+        <p>シラスとトマトのパスタ</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu02.png" alt="">
+        <p>担々カレーうどん</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu03.png" alt="">
+        <p>ベーコンサンド</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu04.png" alt="">
+        <p>オムライス</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu05.png" alt="">
+        <p>チーズカツカレー</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu06.png" alt="">
+        <p>ピスタチオかき氷</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu07.png" alt="">
+        <p>モンブラン</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu08.png" alt="">
+        <p>おでん</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu09.png" alt="">
+        <p>焼きそば</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu10.png" alt="">
+        <p>とんかつ</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu11.png" alt="">
+        <p>味噌煮込みうどん</p>
+      </div>
+      <div class="menu">
+        <img src="./img/menu12.png" alt="">
+        <p>塩ラーメン</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal-overlay">
+    <div class="modal-wrap">
+      <div class="modal-title">
+        <button class="modal-btn js-modal-close modal-close"><span></span></button>
+        <h3>アイテム詳細</h3>
+        <button class="modal-btn js-modal-close modal-comp"><span></span></button>
+      </div>
+      <div class="modal-content">
+        <input type="text" class="modal-item-name" placeholder="商品名">
+        <div class="modal-flex icon icon-limit">
+          <p>賞味期限</p>
+          <input type="text" class="modal-item-limit" placeholder="2025/12/02">
+        </div>
+        <div class="modal-flex">
+          <p>容量</p>
+          <input type="text" class="modal-item-limit" placeholder="200g">
+        </div>
+        <div class="modal-flex">
+          <p>値段</p>
+          <input type="text" class="modal-item-price" placeholder="324円">
+        </div>
+        <div class="modal-flex">
+          <p>購入日</p>
+          <p>2025/02/04</p>
+        </div>
+      </div>
+      <div class="modal-content">
+        <div class="modal-flex icon icon-reminder">
+          <p>リマインド</p>
+          <div class="modal-flex-02">
+            <select class="" name="ID" id="ID" title="数字">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+            <select class="" name="ID" id="ID" title="週数">
+              <option value="週間後">週間後</option>
+              <option value="ヶ月後">ヶ月後</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-content">
+        <div class="modal-flex icon icon-priority">
+          <p>利用頻度</p>
+          <select class="modal-03" name="ID" id="ID" title="頻度">
+            <option value="低">低</option>
+            <option value="中">中</option>
+            <option value="高">高</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer">
+      <a href="index.html">
+        <img src="./img/home.svg" alt="">
+        <p>アイテム一覧</p>
+      </a>
+      <a href="#" class="js-modal-open">
+        <img src="./img/add.svg" alt="">
+        <p>アイテム入力</p>
+      </a>
+      <a href="search.html" class="active">
+        <img src="./img/search.svg" alt="">
+        <p>レシピ検索</p>
+      </a>
+      <a href="shopping_list.html">
+        <img src="./img/shopping.svg" alt="">
+        <p>買い物リスト</p>
+      </a>
+    </div>
+  </footer>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
