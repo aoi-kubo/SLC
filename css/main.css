@@ -264,7 +264,7 @@ h1 {
   box-sizing: border-box;
 }
 
-#modal input::placeholder {
+input::placeholder {
   color: #909090;
 }
 
@@ -421,6 +421,64 @@ select.modal-03 {
 
 .modal-btn.modal-comp span  {
   background: url(../img/comp.svg) no-repeat;
+}
+
+/* レシピ検索 */
+.menu-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.menu-list .menu {
+  width: calc(100% / 2 - 8px);
+}
+
+.menu-list .menu p {
+  font-size: 14px;
+  line-height: 1.35;
+  height: 38px;
+  margin: 4px 0 8px;
+  font-weight: bold;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.menu-list .menu img {
+  width: 100%;
+}
+
+.search {
+  position: relative;
+}
+
+.search::before {
+  position: absolute;
+  content: "";
+  background: url(../img/search.svg) no-repeat;
+  background-size: contain;
+  top: 12px;
+  left: 12px;
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) saturate(100%) invert(97%) sepia(0%) saturate(35%) hue-rotate(204deg) brightness(99%) contrast(79%);
+}
+
+.search input {
+  height: 37px;
+  border: 1px solid #d9d9d9;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px 8px 40px;
+  box-sizing: border-box;
+  background: #fff;
+  margin-bottom: 16px;
 }
 
 /* ショッピングリスト */
