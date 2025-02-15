@@ -29,34 +29,54 @@ $(document).ready(function () {
   let isSwiping = false;
 
   $(".item-contents").on("touchstart", function (e) {
-      startX = e.originalEvent.touches[0].clientX;
-      isSwiping = false;
+    startX = e.originalEvent.touches[0].clientX;
+    isSwiping = false;
   });
 
   $(".item-contents").on("touchmove", function (e) {
-      currentX = e.originalEvent.touches[0].clientX;
-      let diffX = startX - currentX;
+    currentX = e.originalEvent.touches[0].clientX;
+    let diffX = startX - currentX;
 
-      if (diffX > 20) { // 左スワイプで削除ボタン表示
-          isSwiping = true;
-          $(".item-contents").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
-          $(this).addClass("show-delete");
-      } else if (diffX < -20) { // 右スワイプで削除ボタンを閉じる
-          isSwiping = true;
-          $(this).removeClass("show-delete");
-      }
+    if (diffX > 20) { // 左スワイプで削除ボタン表示
+      isSwiping = true;
+      $(".item-contents").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
+      $(this).addClass("show-delete");
+    } else if (diffX < -20) { // 右スワイプで削除ボタンを閉じる
+      isSwiping = true;
+      $(this).removeClass("show-delete");
+    }
   });
 
   $(".item-contents").on("touchend", function () {
-      if (!isSwiping) {
-          $(this).removeClass("show-delete");
-      }
+    if (!isSwiping) {
+      $(this).removeClass("show-delete");
+    }
   });
 
   // 削除ボタンのクリックで即削除
   $(".item-list").on("click", ".delete-btn", function (e) {
-      // e.stopPropagation(); // イベントのバブリングを防ぐ
-      $(this).closest(".item-wrapper").remove(); // 親要素の .item-contents を削除
+    $(this).closest(".item-wrapper").remove(); // 親要素の .item-contents を削除
+    $("#comment-done").show();
+    setTimeout(function() {
+      $("#comment-done").fadeOut("slow");
+    }, 2000);
       
   });
+});
+
+
+$(document).ready(function() {
+  $("#show-link").click(function(event) {
+    sessionStorage.setItem("showComment", "true");
+    window.location.href = "index.html";
+  });
+
+  if (sessionStorage.getItem("showComment") === "true") {
+    $("#comment-new").show();
+    setTimeout(function() {
+      $("#comment-new").fadeOut("slow", function() {
+        sessionStorage.removeItem("showComment");
+      });
+    }, 2000);
+  }
 });
