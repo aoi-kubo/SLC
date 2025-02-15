@@ -1,8 +1,8 @@
 $(document).ready(function() {				
-  const $body = $('body');				
-  const $modal = $('#modal');				
-  const $modalOpenButton = $('.js-modal-open');				
-  const $modalCloseButton = $('.js-modal-close');				
+  const $body = $('body');
+  const $modal = $('#modal');		
+  const $modalOpenButton = $('.js-modal-open');
+  const $modalCloseButton = $('.js-modal-close');
           
   const openModal = () => {				
     $modal.fadeIn();				
@@ -21,7 +21,7 @@ $(document).ready(function() {
   $modalOpenButton.on('click', openModal);				
   $modalCloseButton.on('click', closeModal);				
   $modal.on('click', onClickOutside);
-});	
+});
 
 $(document).ready(function () {
   let startX = 0;

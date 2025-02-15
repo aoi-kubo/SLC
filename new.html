@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シリコ-調味料期限管理</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <!-- <script defer type="module" src="./js/main.js"></script> -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>アイテム一覧</h1>
+  </header>
+
+  <div class="new">
+    <div class="new-wrap">
+      <div class="new-title">
+        <a href="index.html" class="modal-btn modal-close"><span></span></a>
+        <!-- <button class="modal-btn js-modal-close modal-close"><span></span></button> -->
+        <h3>アイテム詳細</h3>
+        <a href="index.html" class="modal-btn modal-comp"><span></span></a>
+        <!-- <button class="modal-btn js-modal-close modal-comp"><span></span></button> -->
+      </div>
+      <div class="new-content">
+        <input type="text" class="new-item-name" placeholder="商品名">
+        <div class="new-flex icon icon-limit">
+          <p>賞味期限</p>
+          <input type="text" class="new-item-limit" placeholder="2025/12/02">
+        </div>
+        <div class="new-flex">
+          <p>容量</p>
+          <input type="text" class="new-item-limit" placeholder="200g">
+        </div>
+        <div class="new-flex">
+          <p>値段</p>
+          <input type="text" class="new-item-price" placeholder="324円">
+        </div>
+        <div class="new-flex">
+          <p>購入日</p>
+          <p>2025/02/04</p>
+        </div>
+      </div>
+      <div class="new-content">
+        <div class="new-flex icon icon-reminder">
+          <p>リマインド</p>
+          <div class="new-flex-02">
+            <select class="" name="ID" id="ID" title="数字">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+            <select class="" name="ID" id="ID" title="週数">
+              <option value="週間後">週間後</option>
+              <option value="ヶ月後">ヶ月後</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="new-content">
+        <div class="new-flex icon icon-priority">
+          <p>利用頻度</p>
+          <select class="new-03" name="ID" id="ID" title="頻度">
+            <option value="低">低</option>
+            <option value="中">中</option>
+            <option value="高">高</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer">
+      <a href="index.html">
+        <img src="./img/home.svg" alt="">
+        <p>アイテム一覧</p>
+      </a>
+      <a href="#" class="active">
+        <img src="./img/add.svg" alt="">
+        <p>アイテム入力</p>
+      </a>
+      <a href="search.html">
+        <img src="./img/search.svg" alt="">
+        <p>レシピ検索</p>
+      </a>
+      <a href="shopping_list.html">
+        <img src="./img/shopping.svg" alt="">
+        <p>買い物リスト</p>
+      </a>
+    </div>
+  </footer>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>

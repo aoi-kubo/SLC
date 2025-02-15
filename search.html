@@ -15,7 +15,7 @@
     <h1>レシピ検索</h1>
   </header>
   <div class="wrapper">
-    <div class="search">
+    <div class="search js-modal-open">
       <input type="text" class="search-input" placeholder="調味料から検索">
     </div>
     <div class="menu-list">
@@ -70,66 +70,62 @@
     </div>
   </div>
 
-  <div id="modal" class="modal-overlay">
+  <div id="modal" class="modal-overlay modal-search">
     <div class="modal-wrap">
-      <div class="modal-title">
-        <button class="modal-btn js-modal-close modal-close"><span></span></button>
-        <h3>アイテム詳細</h3>
-        <button class="modal-btn js-modal-close modal-comp"><span></span></button>
+      <div class="modal-content">
+        <p>利用頻度：低</p>
+        <ul>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox1">
+            <label for="s_checkbox1" class="">ケチャップ</label>
+          </li>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox2">
+            <label for="s_checkbox2" class="">豆板醬</label>
+          </li>
+        </ul>
       </div>
       <div class="modal-content">
-        <input type="text" class="modal-item-name" placeholder="商品名">
-        <div class="modal-flex icon icon-limit">
-          <p>賞味期限</p>
-          <input type="text" class="modal-item-limit" placeholder="2025/12/02">
-        </div>
-        <div class="modal-flex">
-          <p>容量</p>
-          <input type="text" class="modal-item-limit" placeholder="200g">
-        </div>
-        <div class="modal-flex">
-          <p>値段</p>
-          <input type="text" class="modal-item-price" placeholder="324円">
-        </div>
-        <div class="modal-flex">
-          <p>購入日</p>
-          <p>2025/02/04</p>
-        </div>
+        <p>利用頻度：中</p>
+        <ul>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox3">
+            <label for="s_checkbox3" class="">ごま油</label>
+          </li>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox4">
+            <label for="s_checkbox4" class="">白だし</label>
+          </li>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox5">
+            <label for="s_checkbox5" class="">片栗粉</label>
+          </li>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox6">
+            <label for="s_checkbox6" class="">中華だし</label>
+          </li>
+        </ul>
       </div>
       <div class="modal-content">
-        <div class="modal-flex icon icon-reminder">
-          <p>リマインド</p>
-          <div class="modal-flex-02">
-            <select class="" name="ID" id="ID" title="数字">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-            </select>
-            <select class="" name="ID" id="ID" title="週数">
-              <option value="週間後">週間後</option>
-              <option value="ヶ月後">ヶ月後</option>
-            </select>
-          </div>
-        </div>
+        <p>利用頻度：高</p>
+        <ul>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox7">
+            <label for="s_checkbox7" class="">調味塩</label>
+          </li>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox8">
+            <label for="s_checkbox8" class="">キャノーラ油</label>
+          </li>
+          <li>
+            <input class="search-checkbox" type="checkbox" name="checkbox" id="s_checkbox9">
+            <label for="s_checkbox9" class="">中濃ソース</label>
+          </li>
+        </ul>
       </div>
-      <div class="modal-content">
-        <div class="modal-flex icon icon-priority">
-          <p>利用頻度</p>
-          <select class="modal-03" name="ID" id="ID" title="頻度">
-            <option value="低">低</option>
-            <option value="中">中</option>
-            <option value="高">高</option>
-          </select>
-        </div>
+      <div class="search-btn js-modal-close">
+        <button class="btn-close">閉じる</button>
+        <button>検索</button>
       </div>
     </div>
   </div>
@@ -140,7 +136,7 @@
         <img src="./img/home.svg" alt="">
         <p>アイテム一覧</p>
       </a>
-      <a href="#" class="js-modal-open">
+      <a href="new.html">
         <img src="./img/add.svg" alt="">
         <p>アイテム入力</p>
       </a>
