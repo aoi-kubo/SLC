@@ -33,6 +33,10 @@ a {
   transition: color .2s;
 }
 
+a:visited {
+  color: inherit;
+}
+
 .Blu01 {
   color: #1C86EE;
 }
@@ -219,7 +223,52 @@ h1 {
   transform: translateX(-80px);
 }
 
+.comment {
+  display: none;
+  position: absolute;
+  left: 12px;
+  top: 52px;
+  border: 1px solid #6B8E23;
+  padding: 12px;
+  background: #fff;
+  color: #6B8E23;
+  width: 87%;
+  border-radius: 4px;
+  /* font-weight: bold; */
+}
+
 /* アイテム追加 */
+.new-title {
+  display: flex;
+  background: #6B8E23;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  margin-top: 72px;
+}
+
+.new-title::before {
+  position: absolute;
+  content: "";
+  width: calc(100% - 20px);
+  height: 24px;
+  border-radius: 16px 16px 0 0;
+  top: -16px;
+  background: #f5f5f5;
+  z-index: -1;
+}
+
+.new-title h3 {
+  color: #fff;
+  font-size: 16px;
+}
+
+.new-content {
+  padding: 8px 12px;
+}
+
 .new-item {
   position: fixed;
   right: 8px;
@@ -250,11 +299,11 @@ h1 {
   top: 10px;
 }
 
-.modal-content:not(:last-child) {
-  border-bottom: 1px solid #f5f5f5
+.new-content + .new-content {
+  border-top: 1px solid #f5f5f5
 }
 
-.modal-item-name {
+.new-item-name {
   width: 100%;
   border: none;
   padding: 8px 32px;
@@ -268,19 +317,19 @@ input::placeholder {
   color: #909090;
 }
 
-.modal-flex {
+.new-flex {
   display: flex;
   justify-content: space-between;
   padding: 8px 0 8px 32px;
   align-items: center;
 }
 
-.modal-flex p {
+.new-flex p {
   color: #5F6368;
 }
 
-.modal-flex input,
-.modal-flex select {
+.new-flex input,
+.new-flex select {
   height: 44px;
   border: 1px solid #d9d9d9;
   border-radius: 2px;
@@ -294,18 +343,18 @@ input::placeholder {
   background: #fff;
 }
 
-.modal-flex-02 {
+.new-flex-02 {
   display: flex;
 }
 
-.modal-flex-02 select {
+.new-flex-02 select {
   width: 60px;
   padding: 8px;
   margin-left: 16px;
   text-align: left;
 }
 
-.modal-flex-02 select:last-child {
+.new-flex-02 select:last-child {
   width: 90px;
 }
 
@@ -315,11 +364,11 @@ select.modal-03 {
   text-align: left;
 }
 
-.modal-flex.icon {
+.new-flex.icon {
   position: relative;
 }
 
-.modal-flex.icon::before {
+.new-flex.icon::before {
   position: absolute;
   content: "";
   left: 4px;
@@ -329,15 +378,15 @@ select.modal-03 {
   transform: translateY(-50%);
 }
 
-.modal-flex.icon.icon-limit::before {
+.new-flex.icon.icon-limit::before {
   background: url(../img/limit.svg) no-repeat;
 }
 
-.modal-flex.icon.icon-reminder::before {
+.new-flex.icon.icon-reminder::before {
   background: url(../img/reminder.svg);
 }
 
-.modal-flex.icon.icon-priority::before {
+.new-flex.icon.icon-priority::before {
   background: url(../img/priority.svg);
 }
 
@@ -353,7 +402,12 @@ select.modal-03 {
   z-index: 10;
 }
 
-.modal-wrap {
+.modal-search.modal-overlay {
+  top: 100px;
+  height: 80%;
+}
+
+.new-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -363,34 +417,13 @@ select.modal-03 {
   height: 80%;
 }
 
-.modal-title {
-  display: flex;
-  background: #6B8E23;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  border-radius: 12px 12px 0 0;
-  position: relative;
+.modal-search .modal-wrap {
+  height: 98%;
 }
 
-.modal-title::before {
-  position: absolute;
-  content: "";
-  width: calc(100% - 20px);
-  height: 24px;
-  border-radius: 16px 16px 0 0;
-  top: -16px;
-  background: #f5f5f5;
-  z-index: -1;
-}
-
-.modal-title h3 {
-  color: #fff;
-  font-size: 16px;
-}
-
-.modal-content {
-  padding: 8px 12px;
+.modal-search .modal-content {
+  margin: 0px 12px;
+  padding: 8px 0px;
 }
 
 .modal-btn {
@@ -467,7 +500,7 @@ select.modal-03 {
   filter: brightness(0) saturate(100%) invert(97%) sepia(0%) saturate(35%) hue-rotate(204deg) brightness(99%) contrast(79%);
 }
 
-.search input {
+.search input.search-input {
   height: 37px;
   border: 1px solid #d9d9d9;
   border-radius: 20px;
@@ -479,6 +512,77 @@ select.modal-03 {
   box-sizing: border-box;
   background: #fff;
   margin-bottom: 16px;
+}
+
+/* レシピ検索モーダル */
+.modal-search .modal-content ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.modal-search .modal-content li {
+  padding: 8px 8px 8px 12px;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  margin-top: 8px;
+  margin-right: 8px;
+  color: #909090;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.modal-search .modal-content li::before {
+  position: absolute;
+  content: "＋";
+  width: 10px;
+  height: 10px;
+  left: 6px;
+  top: 8px;
+  font-weight: bold;
+}
+
+.modal-search .modal-content input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.modal-search .modal-content li:has(input:checked) {
+  border: 1px solid #6B8E23;
+  background: #6B8E23;
+  color: #fff;
+}
+
+.modal-search .modal-content li:has(input:checked)::before {
+  content: "－";
+}
+
+.search-btn {
+  margin: 40px auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.search-btn button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: #6B8E23;
+  padding: 8px 80px;
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+  margin: 0 8px;
+}
+
+.search-btn button.btn-close {
+  color: #fff;
+  background: #DDDDDD;
+  padding: 8px 20px;
 }
 
 /* ショッピングリスト */
