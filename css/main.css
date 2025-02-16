@@ -301,7 +301,8 @@ h1 {
   top: 10px;
 }
 
-.new-content + .new-content {
+.new-content + .new-content,
+.modal-content + .modal-content {
   border-top: 1px solid #f5f5f5
 }
 
@@ -506,7 +507,7 @@ select.modal-03 {
   height: 37px;
   border: 1px solid #d9d9d9;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   width: 100%;
   text-align: left;
