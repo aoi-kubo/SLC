@@ -547,6 +547,11 @@ select.modal-03 {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  position: absolute;
+}
+
+.modal-search .modal-content label {
+  margin: 0 0 0 12px;
 }
 
 .modal-search .modal-content li:has(input:checked) {
