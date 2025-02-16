@@ -306,7 +306,7 @@ h1 {
   border-top: 1px solid #f5f5f5
 }
 
-.new-item-name {
+.s-name {
   width: 100%;
   border: none;
   padding: 8px 32px;
@@ -320,19 +320,19 @@ input::placeholder {
   color: #909090;
 }
 
-.new-flex {
+.s-flex {
   display: flex;
   justify-content: space-between;
   padding: 8px 0 8px 32px;
   align-items: center;
 }
 
-.new-flex p {
+.s-flex p {
   color: #5F6368;
 }
 
-.new-flex input,
-.new-flex select {
+.s-flex input,
+.s-flex select {
   height: 44px;
   border: 1px solid #d9d9d9;
   border-radius: 2px;
@@ -346,18 +346,18 @@ input::placeholder {
   background: #fff;
 }
 
-.new-flex-02 {
+.s-flex-02 {
   display: flex;
 }
 
-.new-flex-02 select {
+.s-flex-02 select {
   width: 60px;
   padding: 8px;
   margin-left: 16px;
   text-align: left;
 }
 
-.new-flex-02 select:last-child {
+.s-flex-02 select:last-child {
   width: 90px;
 }
 
@@ -367,11 +367,11 @@ select.modal-03 {
   text-align: left;
 }
 
-.new-flex.icon {
+.s-flex.icon {
   position: relative;
 }
 
-.new-flex.icon::before {
+.s-flex.icon::before {
   position: absolute;
   content: "";
   left: 4px;
@@ -381,15 +381,15 @@ select.modal-03 {
   transform: translateY(-50%);
 }
 
-.new-flex.icon.icon-limit::before {
+.s-flex.icon.icon-limit::before {
   background: url(../img/limit.svg) no-repeat;
 }
 
-.new-flex.icon.icon-reminder::before {
+.s-flex.icon.icon-reminder::before {
   background: url(../img/reminder.svg);
 }
 
-.new-flex.icon.icon-priority::before {
+.s-flex.icon.icon-priority::before {
   background: url(../img/priority.svg);
 }
 
@@ -407,9 +407,10 @@ select.modal-03 {
 
 .modal-search.modal-overlay {
   top: 100px;
-  height: 80%;
+  height: 85%;
 }
 
+.modal-wrap,
 .new-wrap {
   position: absolute;
   top: 50%;
@@ -421,7 +422,37 @@ select.modal-03 {
 }
 
 .modal-search .modal-wrap {
-  height: 98%;
+  height: 100%;
+}
+
+.modal-item .modal-title {
+  display: flex;
+  background: #6B8E23;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+}
+
+.modal-item .modal-title::before {
+  position: absolute;
+  content: "";
+  width: calc(100% - 20px);
+  height: 24px;
+  border-radius: 16px 16px 0 0;
+  top: -16px;
+  background: #f5f5f5;
+  z-index: -1;
+}
+
+.modal-item .modal-title h3 {
+  color: #fff;
+  font-size: 16px;
+}
+
+.modal-item .modal-content {
+  padding: 8px 12px;
 }
 
 .modal-search .modal-content {
