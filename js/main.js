@@ -1,70 +1,70 @@
-$(document).ready(function() {				
-  const $body = $('body');
-  const $modal = $('#modal');		
-  const $modalOpenButton = $('.js-modal-open');
-  const $modalCloseButton = $('.js-modal-close');
-          
-  const openModal = () => {				
-    $modal.fadeIn();				
-    $body.css('overflow', 'hidden');
-  };
-          
-  const closeModal = () => {				
-    $modal.fadeOut();				
-    $body.css('overflow', 'auto');				
-  };
-          
-  const onClickOutside = (event) => {				
-    if ($modal.is(event.target)) closeModal();
-  }	
-          
-  $modalOpenButton.on('click', openModal);				
-  $modalCloseButton.on('click', closeModal);				
-  $modal.on('click', onClickOutside);
-});
-
+// 使い切りの挙動
 $(document).ready(function () {
   let startX = 0;
   let currentX = 0;
   let isSwiping = false;
 
-  $(".item-contents").on("touchstart", function (e) {
+  // スワイプで削除ボタン表示
+  $(".item-list").on("touchstart", ".item-wrapper", function (e) {
     startX = e.originalEvent.touches[0].clientX;
     isSwiping = false;
   });
 
-  $(".item-contents").on("touchmove", function (e) {
+  $(".item-list").on("touchmove", ".item-wrapper", function (e) {
     currentX = e.originalEvent.touches[0].clientX;
     let diffX = startX - currentX;
 
     if (diffX > 20) { // 左スワイプで削除ボタン表示
       isSwiping = true;
-      $(".item-contents").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
+      $(".item-wrapper").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
+      $(".item-contents").removeClass("show-delete");
       $(this).addClass("show-delete");
+      $(this).find(".item-contents").addClass("show-delete");
     } else if (diffX < -20) { // 右スワイプで削除ボタンを閉じる
       isSwiping = true;
       $(this).removeClass("show-delete");
+      $(this).find(".item-contents").removeClass("show-delete");
     }
   });
 
-  $(".item-contents").on("touchend", function () {
+  $(".item-list").on("touchend", ".item-wrapper", function () {
     if (!isSwiping) {
       $(this).removeClass("show-delete");
     }
   });
 
-  // 削除ボタンのクリックで即削除
+  // 削除の挙動
   $(".item-list").on("click", ".delete-btn", function (e) {
-    $(this).closest(".item-wrapper").remove(); // 親要素の .item-contents を削除
+    e.stopPropagation();
+
+    let index = $(this).closest(".item-wrapper").data("index"); // 対象アイテムのインデックス取得
+    let savedItems = JSON.parse(localStorage.getItem("items")) || [];
+    let deletedItem = savedItems.splice(index, 1)[0]; // 削除するアイテムを取得
+
+    // LocalStorage の items から削除し、buy に保存
+    let boughtItems = JSON.parse(localStorage.getItem("buy")) || [];
+    boughtItems.push(deletedItem); // buy 配列に追加
+    localStorage.setItem("buy", JSON.stringify(boughtItems)); // buy を更新
+
+    // items を更新して保存
+    localStorage.setItem("items", JSON.stringify(savedItems));
+
+    // 画面から削除
+    $(this).closest(".item-wrapper").remove();
+
+    // 削除完了メッセージ表示
     $("#comment-done").show();
-    setTimeout(function() {
+    setTimeout(function () {
       $("#comment-done").fadeOut("slow");
     }, 2000);
-      
+
+    // 再ロードしてインデックスを更新
+    loadSavedItems();
   });
 });
 
 
+  // 追加完了で一覧ページへの切り替え、追加コメント表示
 $(document).ready(function() {
   $("#show-link").click(function(event) {
     sessionStorage.setItem("showComment", "true");
@@ -79,4 +79,215 @@ $(document).ready(function() {
       });
     }, 2000);
   }
+});
+
+
+// アイテム一覧への追加
+$(document).ready(function () {
+  // 保存データをロードして表示
+  function loadSavedItems() {
+    let savedItems = JSON.parse(localStorage.getItem("items")) || [];
+
+    $(".container").empty(); // 一度リセット
+
+    savedItems.forEach((item) => {
+      let newItem = `
+        <div class="item-wrapper">
+          <div class="item-contents js-modal-open" data-id="${item.id}">
+            <div class="label ${item.priorityClass}">${item.priority}</div>
+            <div class="item-detail">
+              <h2 class="item-name">${item.name} ${item.capacity}</h2>
+              <div>
+                <p class="item-limit"><span>期限：</span>${item.limit}</p>
+                <p class="item-day"><span>購入日：</span>${item.purchaseDate}</p>
+              </div>
+            </div>
+          </div>
+          <div class="delete-btn">使い切り</div>
+        </div>
+      `;
+      $(".item-list ").append(newItem);
+    });
+  }
+
+  // --- 「完了」ボタンが押された時
+  $(".modal-comp").on("click", function () {
+    let itemName = $(".new-item-name").val();
+    let itemLimit = $(".new-item-limit").val();
+    let itemPrice = $(".new-item-price").val();
+    let itemCapacity = $(".new-item-capacity").val();
+    let itemPurchaseDate = $(".new-item-buy").val();
+    let itemPriority = $(".icon-priority select").val();
+
+    if (itemName === "" || itemLimit === "") {
+      alert("商品名と賞味期限を入力してください！");
+      return;
+    }
+
+    let priorityClass = "";
+    if (itemPriority === "高") {
+        priorityClass = "Blu01";
+    } else if (itemPriority === "中") {
+        priorityClass = "Ore01";
+    } else if (itemPriority === "低") {
+        priorityClass = "Red01";
+    }
+
+    let newItem = {
+      id: Date.now(),
+      name: itemName,
+      limit: itemLimit,
+      price: itemPrice,
+      capacity: itemCapacity,
+      purchaseDate: itemPurchaseDate,
+      priority: itemPriority,
+      priorityClass: priorityClass // クラス情報も保存
+    };
+
+    // LocalStorageに保存
+    let savedItems = JSON.parse(localStorage.getItem("items")) || [];
+    savedItems.push(newItem);
+    console.log(newItem)
+    localStorage.setItem("items", JSON.stringify(savedItems));
+
+    // 画面に追加
+    loadSavedItems();
+  });
+
+  // ページ読み込み時に保存データを表示
+  loadSavedItems();
+});
+
+// 買い物リストへの追加
+$(document).ready(function () {
+  // buy のデータをリスト表示
+  function loadbuyItems() {
+    let buyItems = JSON.parse(localStorage.getItem("buy")) || [];
+
+    $(".shopping-list.none ul").empty(); // 既存のリストをクリア
+    buyItems.forEach(item => {
+      let listItem = `
+        <li class="item-contents">
+          <input class="item-checkbox" type="checkbox" name="checkbox" id="checkbox${item.id}">
+          <label for="checkbox${item.id}" class="item-detail">
+            <h2 class="item-name">${item.name}</h2>
+            <div>
+              <p class="item-limit"><span>前回購入日：</span>${item.purchaseDate}</p>
+              <p class="item-name"><span>購入金額：</span>${item.price}</p>
+            </div>
+          </label>
+        </li>
+      `;
+      $(".shopping-list.none ul").append(listItem);
+    });
+  }
+
+  // ページ読み込み時にアイテムを表示
+  loadbuyItems();
+
+  // `bought` のデータを取得し、リストに追加
+  function loadBoughtItems() {
+    let boughtItems = JSON.parse(localStorage.getItem("bought")) || [];
+    $(".shopping-list.done ul").empty(); // リストをクリアして再描画
+
+    boughtItems.forEach(item => {
+      let listItem = `
+        <li class="item-contents">
+          <input class="item-checkbox" type="checkbox" name="checkbox" id="checkbox${item.id}" checked>
+          <label for="checkbox${item.id}" class="item-detail">
+            <h2 class="item-name">${item.name}</h2>
+            <div>
+              <p class="item-limit"><span>前回購入日：</span>${item.limit}</p>
+              <p class="item-name"><span>購入金額：</span>${item.price}</p>
+            </div>
+          </label>
+        </li>
+      `;
+      $(".shopping-list.done ul").append(listItem);
+    });
+  }
+
+  // ページ読み込み時に `bought` のデータを表示
+  loadBoughtItems();
+
+  // チェックボックスの変更イベントを監視
+  $(".item-contents").on("change", ".item-checkbox", function () {
+    let itemId = $(this).attr("id").replace("checkbox", ""); // id から item.id を取得
+    let buyItems = JSON.parse(localStorage.getItem("buy")) || [];
+    let boughtItems = JSON.parse(localStorage.getItem("bought")) || [];
+
+    // 対象アイテムを `buy` から探す
+    let itemIndex = buyItems.findIndex(item => item.id == itemId);
+    if (itemIndex !== -1) {
+      let movedItem = buyItems.splice(itemIndex, 1)[0]; // `buy` から削除
+      boughtItems.push(movedItem); // `bought` に追加
+
+      // LocalStorage を更新
+      localStorage.setItem("buy", JSON.stringify(buyItems));
+      localStorage.setItem("bought", JSON.stringify(boughtItems));
+
+      // HTML から削除
+      $(this).closest(".item-contents").remove();
+      loadBoughtItems();
+
+      // 削除完了メッセージ表示
+      $("#comment-buy").show();
+      setTimeout(function () {
+        $("#comment-buy").fadeOut("slow");
+      }, 2000);
+    }
+  });
+
+});
+
+$(document).ready(function () {
+  const $body = $("body");
+  const $modal = $("#modal");
+  const $modalOpenButton = $(".js-modal-open");
+  const $modalCloseButton = $(".js-modal-close");
+
+  // ローカルストレージからアイテムデータを取得する関数
+  const getItemsFromStorage = () => {
+    return JSON.parse(localStorage.getItem("items")) || [];
+  };
+
+  // モーダルを開く関数（アイテム情報をセットする）
+  const openModal = function () {
+    let itemId = $(this).closest(".item-contents").data("id"); // クリックした要素のdata-idを取得
+    console.log(itemId)
+    let items = getItemsFromStorage();
+
+    // 対象のitemを検索
+    let item = items.find(i => i.id === itemId);
+
+    if (item) {
+      // モーダルの input にデータをセット
+      $(".modal-item-name").val(item.name);
+      $(".modal-item-limit").val(item.limit);
+      $(".modal-item-capacity").val(item.capacity);
+      $(".modal-item-price").val(item.price);
+      $(".modal-item-buy").val(item.purchaseDate);
+      $(".modal-03").val(item.priority); // 優先度のセレクトボックスにセット
+
+      // モーダルを表示
+      $modal.fadeIn();
+      $body.css("overflow", "hidden");
+    }
+  };
+
+  // モーダルを閉じる関数
+  const closeModal = function () {
+    $modal.fadeOut();
+    $body.css("overflow", "auto");
+  };
+
+  // モーダル外クリックで閉じる
+  const onClickOutside = function (event) {
+    if ($modal.is(event.target)) closeModal();
+  };
+
+  // イベントリスナーをセット
+  $modalOpenButton.on("click", openModal);
+  $modalCloseButton.on("click", closeModal);
+  $modal.on("click", onClickOutside);
 });
