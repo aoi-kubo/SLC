@@ -1,69 +1,3 @@
-// 使い切りの挙動
-$(document).ready(function () {
-  let startX = 0;
-  let currentX = 0;
-  let isSwiping = false;
-
-  // スワイプで削除ボタン表示
-  $(".item-list").on("touchstart", ".item-wrapper", function (e) {
-    startX = e.originalEvent.touches[0].clientX;
-    isSwiping = false;
-  });
-
-  $(".item-list").on("touchmove", ".item-wrapper", function (e) {
-    currentX = e.originalEvent.touches[0].clientX;
-    let diffX = startX - currentX;
-
-    if (diffX > 20) { // 左スワイプで削除ボタン表示
-      isSwiping = true;
-      $(".item-wrapper").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
-      $(".item-contents").removeClass("show-delete");
-      $(this).addClass("show-delete");
-      $(this).find(".item-contents").addClass("show-delete");
-    } else if (diffX < -20) { // 右スワイプで削除ボタンを閉じる
-      isSwiping = true;
-      $(this).removeClass("show-delete");
-      $(this).find(".item-contents").removeClass("show-delete");
-    }
-  });
-
-  $(".item-list").on("touchend", ".item-wrapper", function () {
-    if (!isSwiping) {
-      $(this).removeClass("show-delete");
-    }
-  });
-
-  // 削除の挙動
-  $(".item-list").on("click", ".delete-btn", function (e) {
-    e.stopPropagation();
-
-    let index = $(this).closest(".item-wrapper").data("index"); // 対象アイテムのインデックス取得
-    let savedItems = JSON.parse(localStorage.getItem("items")) || [];
-    let deletedItem = savedItems.splice(index, 1)[0]; // 削除するアイテムを取得
-
-    // LocalStorage の items から削除し、buy に保存
-    let boughtItems = JSON.parse(localStorage.getItem("buy")) || [];
-    boughtItems.push(deletedItem); // buy 配列に追加
-    localStorage.setItem("buy", JSON.stringify(boughtItems)); // buy を更新
-
-    // items を更新して保存
-    localStorage.setItem("items", JSON.stringify(savedItems));
-
-    // 画面から削除
-    $(this).closest(".item-wrapper").remove();
-
-    // 削除完了メッセージ表示
-    $("#comment-done").show();
-    setTimeout(function () {
-      $("#comment-done").fadeOut("slow");
-    }, 2000);
-
-    // 再ロードしてインデックスを更新
-    loadSavedItems();
-  });
-});
-
-
   // 追加完了で一覧ページへの切り替え、追加コメント表示
 $(document).ready(function() {
   $("#show-link").click(function(event) {
@@ -117,6 +51,8 @@ $(document).ready(function () {
     let itemPrice = $(".new-item-price").val();
     let itemCapacity = $(".new-item-capacity").val();
     let itemPurchaseDate = $(".new-item-buy").val();
+    let itemReminderNum = $(".icon-reminder select.reminder-num").val();
+    let itemReminderText = $(".icon-reminder select.reminder-text").val();
     let itemPriority = $(".icon-priority select").val();
 
     if (itemName === "" || itemLimit === "") {
@@ -140,6 +76,8 @@ $(document).ready(function () {
       price: itemPrice,
       capacity: itemCapacity,
       purchaseDate: itemPurchaseDate,
+      reminderNum: itemReminderNum,
+      reminderText: itemReminderText,
       priority: itemPriority,
       priorityClass: priorityClass // クラス情報も保存
     };
@@ -267,6 +205,8 @@ $(document).ready(function () {
       $(".modal-item-capacity").val(item.capacity);
       $(".modal-item-price").val(item.price);
       $(".modal-item-buy").val(item.purchaseDate);
+      $(".modal-reminder-num").val(item.reminderNum);
+      $(".modal-reminder-text").val(item.reminderText);
       $(".modal-03").val(item.priority); // 優先度のセレクトボックスにセット
 
       // モーダルを表示
@@ -291,3 +231,79 @@ $(document).ready(function () {
   $modalCloseButton.on("click", closeModal);
   $modal.on("click", onClickOutside);
 });
+
+
+// 使い切りの挙動
+$(document).ready(function () {
+  let startX = 0;
+  let currentX = 0;
+  let isSwiping = false;
+
+  // スワイプで削除ボタン表示
+  $(".item-list").on("touchstart", ".item-wrapper", function (e) {
+    startX = e.originalEvent.touches[0].clientX;
+    isSwiping = false;
+  });
+
+  $(".item-list").on("touchmove", ".item-wrapper", function (e) {
+    currentX = e.originalEvent.touches[0].clientX;
+    let diffX = startX - currentX;
+
+    if (diffX > 20) { // 左スワイプで削除ボタン表示
+      isSwiping = true;
+      $(".item-wrapper").removeClass("show-delete"); // 他のアイテムの削除ボタンを閉じる
+      $(".item-contents").removeClass("show-delete");
+      $(this).addClass("show-delete");
+      $(this).find(".item-contents").addClass("show-delete");
+    } else if (diffX < -20) { // 右スワイプで削除ボタンを閉じる
+      isSwiping = true;
+      $(this).removeClass("show-delete");
+      $(this).find(".item-contents").removeClass("show-delete");
+    }
+  });
+
+  $(".item-list").on("touchend", ".item-wrapper", function () {
+    if (!isSwiping) {
+      $(this).removeClass("show-delete");
+    }
+  });
+
+  // 削除の挙動
+  $(".item-list").on("click", ".delete-btn", function (e) {
+  // e.stopPropagation();
+  
+    let itemdelId = $(".item-contents.show-delete").data("id");
+
+    let savedItems = JSON.parse(localStorage.getItem("items")) || [];
+    
+    // アイテムIDに一致する要素を探して削除
+    let itemIndex = savedItems.findIndex(item => item.id === itemdelId);
+
+    if (itemIndex !== -1) {
+      let deletedItem = savedItems.splice(itemIndex, 1)[0]; // 削除するアイテムを取得
+
+      // LocalStorage の items から削除し、buy に保存
+      let boughtItems = JSON.parse(localStorage.getItem("buy")) || [];
+      boughtItems.push(deletedItem); // buy 配列に追加
+      localStorage.setItem("buy", JSON.stringify(boughtItems)); // buy を更新
+
+      // items を更新して保存
+      localStorage.setItem("items", JSON.stringify(savedItems));
+
+      // 画面から削除
+      $(this).closest(".item-wrapper").remove();
+
+      // 削除完了メッセージ表示
+      $("#comment-done").show();
+      setTimeout(function () {
+        $("#comment-done").fadeOut("slow");
+      }, 2000);
+
+      // 再ロードしてインデックスを更新
+      loadSavedItems();
+    } else {
+      console.error("アイテムが見つかりませんでした。削除処理を中止します。");
+    }
+  });
+});
+

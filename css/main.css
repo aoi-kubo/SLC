@@ -361,6 +361,7 @@ input::placeholder {
   width: 90px;
 }
 
+select.new-03,
 select.modal-03 {
   width: 60px;
   padding: 8px;
