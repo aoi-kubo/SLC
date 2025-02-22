@@ -1,4 +1,4 @@
-  // 追加完了で一覧ページへの切り替え、追加コメント表示
+// 追加完了で一覧ページへの切り替え、追加コメント表示
 $(document).ready(function() {
   $("#show-link").click(function(event) {
     sessionStorage.setItem("showComment", "true");
@@ -24,10 +24,18 @@ $(document).ready(function () {
 
     $(".container").empty(); // 一度リセット
 
+    let today = new Date(); // 現在の日付を取得（時刻をクリア）
+    today.setHours(0, 0, 0, 0);
+
     savedItems.forEach((item) => {
+      let itemLimitDate = new Date(item.limit); // アイテムの期限を日付オブジェクトに変換
+      itemLimitDate.setHours(0, 0, 0, 0); // 時刻をクリアして比較
+
+      let isDeadline = itemLimitDate < today; // 期限切れか判定
+
       let newItem = `
         <div class="item-wrapper">
-          <div class="item-contents js-modal-open" data-id="${item.id}">
+          <div class="item-contents js-modal-open ${isDeadline ? "deadline" : ""}" data-id="${item.id}">
             <div class="label ${item.priorityClass}">${item.priority}</div>
             <div class="item-detail">
               <h2 class="item-name">${item.name} ${item.capacity}</h2>
@@ -46,50 +54,53 @@ $(document).ready(function () {
 
   // --- 「完了」ボタンが押された時
   $(".modal-comp").on("click", function () {
-    let itemName = $(".new-item-name").val();
-    let itemLimit = $(".new-item-limit").val();
-    let itemPrice = $(".new-item-price").val();
-    let itemCapacity = $(".new-item-capacity").val();
-    let itemPurchaseDate = $(".new-item-buy").val();
-    let itemReminderNum = $(".icon-reminder select.reminder-num").val();
-    let itemReminderText = $(".icon-reminder select.reminder-text").val();
-    let itemPriority = $(".icon-priority select").val();
-
-    if (itemName === "" || itemLimit === "") {
-      alert("商品名と賞味期限を入力してください！");
-      return;
+    if (!($('.modal-overlay.modal-item').css('display') === 'block')) {
+        console.log('aaa')
+      let itemName = $(".new-item-name").val();
+      let itemLimit = $(".new-item-limit").val();
+      let itemPrice = $(".new-item-price").val();
+      let itemCapacity = $(".new-item-capacity").val();
+      let itemPurchaseDate = $(".new-item-buy").val();
+      let itemReminderNum = $(".icon-reminder select.reminder-num").val();
+      let itemReminderText = $(".icon-reminder select.reminder-text").val();
+      let itemPriority = $(".icon-priority select").val();
+  
+      if (itemName === "" || itemLimit === "") {
+        alert("商品名と賞味期限を入力してください！");
+        return;
+      }
+  
+      let priorityClass = "";
+      if (itemPriority === "高") {
+          priorityClass = "Blu01";
+      } else if (itemPriority === "中") {
+          priorityClass = "Ore01";
+      } else if (itemPriority === "低") {
+          priorityClass = "Red01";
+      }
+  
+      let newItem = {
+        id: Date.now(),
+        name: itemName,
+        limit: itemLimit,
+        price: itemPrice,
+        capacity: itemCapacity,
+        purchaseDate: itemPurchaseDate,
+        reminderNum: itemReminderNum,
+        reminderText: itemReminderText,
+        priority: itemPriority,
+        priorityClass: priorityClass // クラス情報も保存
+      };
+  
+      // LocalStorageに保存
+      let savedItems = JSON.parse(localStorage.getItem("items")) || [];
+      savedItems.push(newItem);
+      console.log(newItem)
+      localStorage.setItem("items", JSON.stringify(savedItems));
+  
+      // 画面に追加
+      loadSavedItems();
     }
-
-    let priorityClass = "";
-    if (itemPriority === "高") {
-        priorityClass = "Blu01";
-    } else if (itemPriority === "中") {
-        priorityClass = "Ore01";
-    } else if (itemPriority === "低") {
-        priorityClass = "Red01";
-    }
-
-    let newItem = {
-      id: Date.now(),
-      name: itemName,
-      limit: itemLimit,
-      price: itemPrice,
-      capacity: itemCapacity,
-      purchaseDate: itemPurchaseDate,
-      reminderNum: itemReminderNum,
-      reminderText: itemReminderText,
-      priority: itemPriority,
-      priorityClass: priorityClass // クラス情報も保存
-    };
-
-    // LocalStorageに保存
-    let savedItems = JSON.parse(localStorage.getItem("items")) || [];
-    savedItems.push(newItem);
-    console.log(newItem)
-    localStorage.setItem("items", JSON.stringify(savedItems));
-
-    // 画面に追加
-    loadSavedItems();
   });
 
   // ページ読み込み時に保存データを表示
@@ -178,11 +189,13 @@ $(document).ready(function () {
 
 });
 
+// モーダルの表示・更新
 $(document).ready(function () {
   const $body = $("body");
   const $modal = $("#modal");
   const $modalOpenButton = $(".js-modal-open");
   const $modalCloseButton = $(".js-modal-close");
+  const $modalCompButton = $(".modal-comp");
 
   // ローカルストレージからアイテムデータを取得する関数
   const getItemsFromStorage = () => {
@@ -192,7 +205,6 @@ $(document).ready(function () {
   // モーダルを開く関数（アイテム情報をセットする）
   const openModal = function () {
     let itemId = $(this).closest(".item-contents").data("id"); // クリックした要素のdata-idを取得
-    console.log(itemId)
     let items = getItemsFromStorage();
 
     // 対象のitemを検索
@@ -213,6 +225,48 @@ $(document).ready(function () {
       $modal.fadeIn();
       $body.css("overflow", "hidden");
     }
+
+    // モーダル内の完了ボタンを押したときの処理
+    $modalCompButton.on("click", function () {
+      console.log(itemId)
+      let items = getItemsFromStorage();
+      console.log(items)
+      
+      let itemIndex = items.findIndex(i => i.id === itemId);
+      console.log(itemIndex)
+      if (itemIndex !== -1) {
+        // 更新するデータを取得
+        items[itemIndex].name = $(".modal-item-name").val();
+        items[itemIndex].limit = $(".modal-item-limit").val();
+        items[itemIndex].capacity = $(".modal-item-capacity").val();
+        items[itemIndex].price = $(".modal-item-price").val();
+        items[itemIndex].purchaseDate = $(".modal-item-buy").val();
+        items[itemIndex].reminderNum = $(".modal-reminder-num").val();
+        items[itemIndex].reminderText = $(".modal-reminder-text").val();
+        items[itemIndex].priority = $(".modal-03").val();
+
+        let priorityClass = "";
+        if (items[itemIndex].priority === "高") {
+            priorityClass = "Blu01";
+        } else if (items[itemIndex].priority === "中") {
+            priorityClass = "Ore01";
+        } else if (items[itemIndex].priority === "低") {
+            priorityClass = "Red01";
+        }
+        items[itemIndex].priorityClass = priorityClass;
+
+        // LocalStorage を更新
+        localStorage.setItem("items", JSON.stringify(items));
+
+        // 画面を再読み込みしてリストを更新
+        location.reload();
+      } else {
+        console.error("アイテムが見つかりませんでした。");
+      }
+
+      closeModal(); // モーダルを閉じる
+
+    });
   };
 
   // モーダルを閉じる関数
