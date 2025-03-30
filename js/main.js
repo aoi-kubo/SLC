@@ -1,24 +1,31 @@
-// 追加完了で一覧ページへの切り替え、追加コメント表示
-$(document).ready(function() {
+$(function() {
+  // 追加完了で一覧ページへの切り替え
   $("#show-link").click(function(event) {
     sessionStorage.setItem("showComment", "true");
     window.location.href = "index.html";
   });
-
+  
+  // コメント表示
   if (sessionStorage.getItem("showComment") === "true") {
-    $("#comment-new").show();
-    setTimeout(function() {
-      $("#comment-new").fadeOut("slow", function() {
-        sessionStorage.removeItem("showComment");
-      });
-    }, 2000);
+    $("#comment-new").show().delay(2000).fadeOut("slow");
+    sessionStorage.removeItem("showComment"); // すぐに削除する
   }
 
+  // ローカルストレージからデータを取得する共通関数
+  const getLocalStorage = (key) => {
+    return JSON.parse(localStorage.getItem(key)) || [];
+  };
 
-// アイテム一覧への追加
+  // ローカルストレージにデータを保存する共通関数
+  const setLocalStorage = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data));
+  };
+
+
+  // アイテム一覧への追加
   // 保存データをロードして表示
   function loadSavedItems() {
-    let savedItems = JSON.parse(localStorage.getItem("items")) || [];
+    let savedItems = getLocalStorage("items");
 
     $(".container").empty(); // 一度リセット
 
@@ -51,9 +58,8 @@ $(document).ready(function() {
   }
 
   // --- 「完了」ボタンが押された時
-  $(".modal-comp").on("click", function () {
+  $(document).on("click", ".modal-comp", function() {
     if (!($('.modal-overlay.modal-item').css('display') === 'block')) {
-        console.log('aaa')
       let itemName = $(".new-item-name").val();
       let itemLimit = $(".new-item-limit").val();
       let itemPrice = $(".new-item-price").val();
@@ -91,17 +97,19 @@ $(document).ready(function() {
       };
   
       // LocalStorageに保存
-      let savedItems = JSON.parse(localStorage.getItem("items")) || [];
+      let savedItems = getLocalStorage("items");
       savedItems.push(newItem);
       console.log(newItem)
-      localStorage.setItem("items", JSON.stringify(savedItems));
+      setLocalStorage("items", savedItems);;
   
       // 画面に追加
+      $(".item-list").empty();
       loadSavedItems();
     }
   });
 
   // ページ読み込み時に保存データを表示
+  $(".item-list").empty();
   loadSavedItems();
 
 // 買い物リストへの追加
@@ -192,7 +200,7 @@ $(document).ready(function() {
 
   // ローカルストレージからアイテムデータを取得する関数
   const getItemsFromStorage = () => {
-    return JSON.parse(localStorage.getItem("items")) || [];
+    return getLocalStorage("items");
   };
 
   // モーダルを開く関数（アイテム情報をセットする）
@@ -220,7 +228,7 @@ $(document).ready(function() {
     }
 
     // モーダル内の完了ボタンを押したときの処理
-    $modalCompButton.on("click", function () {
+    $(document).on("click", $modalCompButton, function() {
       console.log(itemId)
       let items = getItemsFromStorage();
       console.log(items)
@@ -319,7 +327,7 @@ $(document).ready(function() {
   
     let itemdelId = $(".item-contents.show-delete").data("id");
 
-    let savedItems = JSON.parse(localStorage.getItem("items")) || [];
+    let savedItems = getLocalStorage("items");
     
     // アイテムIDに一致する要素を探して削除
     let itemIndex = savedItems.findIndex(item => item.id === itemdelId);
@@ -333,7 +341,7 @@ $(document).ready(function() {
       localStorage.setItem("buy", JSON.stringify(boughtItems)); // buy を更新
 
       // items を更新して保存
-      localStorage.setItem("items", JSON.stringify(savedItems));
+      setLocalStorage("items", savedItems);;
 
       // 画面から削除
       $(this).closest(".item-wrapper").remove();
@@ -345,6 +353,7 @@ $(document).ready(function() {
       }, 2000);
 
       // 再ロードしてインデックスを更新
+      $(".item-list").empty();
       loadSavedItems();
     } else {
       console.error("アイテムが見つかりませんでした。削除処理を中止します。");
