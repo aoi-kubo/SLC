@@ -227,7 +227,7 @@ h1 {
 
 .comment {
   display: none;
-  position: absolute;
+  position: fixed;
   left: 12px;
   top: 52px;
   border: 1px solid #6B8E23;
@@ -236,6 +236,7 @@ h1 {
   color: #6B8E23;
   width: 87%;
   border-radius: 4px;
+  z-index: 10;
   /* font-weight: bold; */
 }
 
