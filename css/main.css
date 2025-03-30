@@ -69,6 +69,7 @@ h1 {
   display: flex;
   padding: 12px 12px 16px;
   position: fixed;
+  justify-content: space-around;
   border-top: 1px solid #F5F5F5;
   bottom: 0;
   width: 100%;
@@ -709,3 +710,31 @@ label.item-detail {
   background: #F3F3F3;
 }
 
+@media screen and (min-width:1000px) {
+  html {
+    background: #fafafa;
+  }
+
+  body,
+  header,
+  .footer {
+    width: 600px;
+  }
+
+  body {
+    background: #fff;
+    margin: 0 auto;
+    height: 100vh;
+  }
+
+  .new-item {
+    right: 35%;
+  }
+
+  .modal-overlay {
+    left: 50%;
+    width: 600px;
+    transform: translateX(-50%);
+  }
+
+}

@@ -13,11 +13,9 @@ $(document).ready(function() {
       });
     }, 2000);
   }
-});
 
 
 // アイテム一覧への追加
-$(document).ready(function () {
   // 保存データをロードして表示
   function loadSavedItems() {
     let savedItems = JSON.parse(localStorage.getItem("items")) || [];
@@ -105,10 +103,8 @@ $(document).ready(function () {
 
   // ページ読み込み時に保存データを表示
   loadSavedItems();
-});
 
 // 買い物リストへの追加
-$(document).ready(function () {
   // buy のデータをリスト表示
   function loadbuyItems() {
     let buyItems = JSON.parse(localStorage.getItem("buy")) || [];
@@ -187,10 +183,7 @@ $(document).ready(function () {
     }
   });
 
-});
-
 // モーダルの表示・更新
-$(document).ready(function () {
   const $body = $("body");
   const $modal = $("#modal");
   const $modalOpenButton = $(".js-modal-open");
@@ -284,11 +277,9 @@ $(document).ready(function () {
   $modalOpenButton.on("click", openModal);
   $modalCloseButton.on("click", closeModal);
   $modal.on("click", onClickOutside);
-});
 
 
 // 使い切りの挙動
-$(document).ready(function () {
   let startX = 0;
   let currentX = 0;
   let isSwiping = false;
@@ -359,5 +350,5 @@ $(document).ready(function () {
       console.error("アイテムが見つかりませんでした。削除処理を中止します。");
     }
   });
-});
 
+});
