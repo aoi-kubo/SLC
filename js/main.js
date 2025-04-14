@@ -21,7 +21,6 @@ $(function() {
     localStorage.setItem(key, JSON.stringify(data));
   };
 
-
   // アイテム一覧への追加
   // 保存データをロードして表示
   function loadSavedItems() {
@@ -106,6 +105,70 @@ $(function() {
       $(".item-list").empty();
       loadSavedItems();
     }
+  });
+
+  // 利用頻度（優先度）を数値に変換
+  function priorityToNumber(priority) {
+    switch (priority) {
+      case "高": return 3;
+      case "中": return 2;
+      case "低": return 1;
+      default: return 0;
+    }
+  }
+
+  // 並び替え処理
+  $("select[title='ソート']").on("change", function () {
+    let selected = $(this).find("option:selected").val();
+    let sortItems = JSON.parse(localStorage.getItem("items")) || [];
+
+    switch (selected) {
+      case "購入日が古い順":
+        // console.log(new Date(a.purchaseDate))
+        sortItems.sort((a, b) => new Date(a.purchaseDate) - new Date(b.purchaseDate));
+        break;
+      case "購入日が新しい順":
+        sortItems.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+        break;
+      case "期限が近い順":
+        sortItems.sort((a, b) => new Date(a.limit) - new Date(b.limit));
+        break;
+      case "利用頻度が高い順":
+        sortItems.sort((a, b) => priorityToNumber(b.priority) - priorityToNumber(a.priority));
+        break;
+      case "利用頻度が低い順":
+        sortItems.sort((a, b) => priorityToNumber(a.priority) - priorityToNumber(b.priority));
+        break;
+      default:
+        break;
+    }
+
+    // ソート後に再描画
+    $(".item-list").empty();
+    sortItems.forEach(item => {
+      let itemLimitDate = new Date(item.limit);
+      itemLimitDate.setHours(0, 0, 0, 0);
+      let today = new Date();
+      today.setHours(0, 0, 0, 0);
+      let isDeadline = itemLimitDate < today;
+
+      let newItem = `
+        <div class="item-wrapper">
+          <div class="item-contents js-modal-open ${isDeadline ? "deadline" : ""}" data-id="${item.id}">
+            <div class="label ${item.priorityClass}">${item.priority}</div>
+            <div class="item-detail">
+              <h2 class="item-name">${item.name} ${item.capacity}</h2>
+              <div>
+                <p class="item-limit"><span>期限：</span>${item.limit}</p>
+                <p class="item-day"><span>購入日：</span>${item.purchaseDate}</p>
+              </div>
+            </div>
+          </div>
+          <div class="delete-btn">使い切り</div>
+        </div>
+      `;
+      $(".item-list").append(newItem);
+    });
   });
 
   // ページ読み込み時に保存データを表示
@@ -287,7 +350,7 @@ $(function() {
   $modal.on("click", onClickOutside);
 
 
-// 使い切りの挙動
+  // 使い切りの挙動
   let startX = 0;
   let currentX = 0;
   let isSwiping = false;
@@ -327,13 +390,13 @@ $(function() {
   
     let itemdelId = $(".item-contents.show-delete").data("id");
 
-    let savedItems = getLocalStorage("items");
+    let deleteItems = getLocalStorage("items");
     
     // アイテムIDに一致する要素を探して削除
-    let itemIndex = savedItems.findIndex(item => item.id === itemdelId);
+    let itemIndex = deleteItems.findIndex(item => item.id === itemdelId);
 
     if (itemIndex !== -1) {
-      let deletedItem = savedItems.splice(itemIndex, 1)[0]; // 削除するアイテムを取得
+      let deletedItem = deleteItems.splice(itemIndex, 1)[0]; // 削除するアイテムを取得
 
       // LocalStorage の items から削除し、buy に保存
       let boughtItems = JSON.parse(localStorage.getItem("buy")) || [];
@@ -341,7 +404,7 @@ $(function() {
       localStorage.setItem("buy", JSON.stringify(boughtItems)); // buy を更新
 
       // items を更新して保存
-      setLocalStorage("items", savedItems);;
+      setLocalStorage("items", deleteItems);;
 
       // 画面から削除
       $(this).closest(".item-wrapper").remove();
