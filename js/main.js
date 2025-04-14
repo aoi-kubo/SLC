@@ -268,6 +268,7 @@ $(function() {
 
   // モーダルを開く関数（アイテム情報をセットする）
   const openModal = function () {
+    // console.log('aaa')
     let itemId = $(this).closest(".item-contents").data("id"); // クリックした要素のdata-idを取得
     let items = getItemsFromStorage();
 
@@ -291,7 +292,7 @@ $(function() {
     }
 
     // モーダル内の完了ボタンを押したときの処理
-    $(document).on("click", $modalCompButton, function() {
+    $modalCompButton.on("click", function() {
       console.log(itemId)
       let items = getItemsFromStorage();
       console.log(items)
