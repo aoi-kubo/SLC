@@ -60,7 +60,7 @@ header {
 h1 {
   font-size: 16px;
   padding: 12px 12px 8px;
-  background: #6B8E23;
+  background: #259D63;
   color: #FFF;
 }
 
@@ -85,7 +85,7 @@ h1 {
 }
 
 .footer a.active {
-  color: #6B8E23;
+  color: #259D63;
 }
 
 .footer a img {
@@ -95,7 +95,7 @@ h1 {
 }
 
 .footer a.active img {
-  filter: brightness(0) saturate(100%) invert(47%) sepia(76%) saturate(429%) hue-rotate(38deg) brightness(90%) contrast(85%);
+  filter: brightness(0) saturate(100%) invert(45%) sepia(61%) saturate(478%) hue-rotate(99deg) brightness(97%) contrast(93%);
 }
 
 .footer p {
@@ -230,10 +230,10 @@ h1 {
   position: fixed;
   left: 12px;
   top: 52px;
-  border: 1px solid #6B8E23;
+  border: 1px solid #259D63;
   padding: 12px;
   background: #fff;
-  color: #6B8E23;
+  color: #259D63;
   width: 87%;
   border-radius: 4px;
   z-index: 10;
@@ -243,7 +243,7 @@ h1 {
 /* アイテム追加 */
 .new-title {
   display: flex;
-  background: #6B8E23;
+  background: #259D63;
   justify-content: space-between;
   align-items: center;
   padding: 12px;
@@ -278,7 +278,7 @@ h1 {
   bottom: 90px;
   width: 80px;
   height: 80px;
-  border: 3px solid #6B8E23;
+  border: 3px solid #259D63;
   background: #FFF;
   border-radius: 50%;
   text-align: center;
@@ -430,7 +430,7 @@ select.modal-03 {
 
 .modal-item .modal-title {
   display: flex;
-  background: #6B8E23;
+  background: #259D63;
   justify-content: space-between;
   align-items: center;
   padding: 12px;
@@ -590,8 +590,8 @@ select.modal-03 {
 }
 
 .modal-search .modal-content li:has(input:checked) {
-  border: 1px solid #6B8E23;
-  background: #6B8E23;
+  border: 1px solid #259D63;
+  background: #259D63;
   color: #fff;
 }
 
@@ -613,7 +613,7 @@ select.modal-03 {
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  background: #6B8E23;
+  background: #259D63;
   padding: 8px 80px;
   text-align: center;
   border: none;
@@ -658,7 +658,7 @@ select.modal-03 {
 }
 
 .tab label:has(:checked) {
-  color: #6B8E23;
+  color: #259D63;
   position: relative;
 }
 
@@ -667,7 +667,7 @@ select.modal-03 {
   content: "";
   width: 45%;
   height: 3px;
-  background: #6B8E23;
+  background: #259D63;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
